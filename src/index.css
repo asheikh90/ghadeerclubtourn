@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 min-h-screen text-white font-sans;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-glow transform hover:-translate-y-0.5 active:scale-95;
+  }
+  
+  .btn-secondary {
+    @apply bg-slate-800/80 backdrop-blur-sm hover:bg-slate-700/80 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 border border-slate-600/50 hover:border-slate-500/50 shadow-card;
+  }
+
+  .btn-discord {
+    @apply bg-gradient-to-r from-discord-600 to-discord-500 hover:from-discord-700 hover:to-discord-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-glow transform hover:-translate-y-0.5 active:scale-95;
+  }
+  
+  .card {
+    @apply bg-slate-900/60 backdrop-blur-md border border-slate-700/50 rounded-2xl p-6 shadow-card hover:shadow-glow transition-all duration-300;
+  }
+
+  .card-premium {
+    @apply bg-gradient-to-br from-slate-900/80 to-slate-800/60 backdrop-blur-md border border-slate-600/30 rounded-2xl p-6 shadow-card hover:shadow-glow transition-all duration-300 relative overflow-hidden;
+  }
+
+  .card-premium::before {
+    @apply absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent pointer-events-none;
+    content: '';
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 transition-all duration-300 shadow-inner;
+  }
+
+  .select-field {
+    @apply w-full px-4 py-3 bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 transition-all duration-300 shadow-inner appearance-none cursor-pointer;
+  }
+
+  .countdown-digit {
+    @apply bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-600/50 rounded-xl p-4 text-center shadow-card;
+  }
+
+  .game-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-500/20 text-primary-300 border border-primary-500/30;
+  }
+
+  .status-badge {
+    @apply inline-flex items-center px-2 py-1 rounded-lg text-xs font-medium;
+  }
+
+  .nav-link {
+    @apply flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all duration-300 font-medium;
+  }
+
+  .nav-link-active {
+    @apply bg-gradient-to-r from-primary-600/20 to-primary-500/10 text-primary-300 border border-primary-500/30 shadow-inner-glow;
+  }
+
+  .nav-link-inactive {
+    @apply text-slate-300 hover:text-white hover:bg-slate-800/50 border border-transparent hover:border-slate-600/30;
+  }
+}
