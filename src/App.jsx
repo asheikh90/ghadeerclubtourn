@@ -12,6 +12,10 @@ import TournamentBracket from './components/tournament/TournamentBracket'
 import ScoreSubmission from './components/tournament/ScoreSubmission'
 import Leaderboard from './components/tournament/Leaderboard'
 import AdminPanel from './components/tournament/AdminPanel'
+import MissionBanner from './components/MissionBanner'
+import SalahReminder from './components/SalahReminder'
+import QuranTrivia from './components/QuranTrivia'
+import Footer from './components/Footer'
 
 const GAMES = [
   { id: 'cod', name: 'Call of Duty', platform: 'Activision ID', category: 'FPS', rating: 'M', ageAppropriate: true },
@@ -40,6 +44,10 @@ function App() {
   const [user, setUser] = useState(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
+  // Islamic features state
+  const [showSalahReminder, setShowSalahReminder] = useState(false)
+  const [showQuranTrivia, setShowQuranTrivia] = useState(false)
+
   // Load data from localStorage on mount
   useEffect(() => {
     const savedTeams = localStorage.getItem('tournament-teams')
@@ -58,6 +66,33 @@ function App() {
       setUser(JSON.parse(savedUser))
       setIsAuthenticated(true)
     }
+  }, [])
+
+  // Check for prayer times and show reminders
+  useEffect(() => {
+    const checkPrayerTime = () => {
+      const now = new Date()
+      const hour = now.getHours()
+      const minute = now.getMinutes()
+      
+      // Prayer times (approximate - should be calculated based on location)
+      const prayerTimes = [
+        { name: 'Fajr', hour: 5, minute: 30 },
+        { name: 'Dhuhr', hour: 12, minute: 30 },
+        { name: 'Asr', hour: 15, minute: 30 },
+        { name: 'Maghrib', hour: 18, minute: 30 },
+        { name: 'Isha', hour: 20, minute: 0 }
+      ]
+
+      prayerTimes.forEach(prayer => {
+        if (hour === prayer.hour && minute >= prayer.minute && minute < prayer.minute + 5) {
+          setShowSalahReminder(true)
+        }
+      })
+    }
+
+    const interval = setInterval(checkPrayerTime, 60000) // Check every minute
+    return () => clearInterval(interval)
   }, [])
 
   // Save data to localStorage whenever state changes
@@ -102,6 +137,9 @@ function App() {
 
   const generateBracket = () => {
     if (teams.length < 2) return
+
+    // Show Quran trivia before tournament starts
+    setShowQuranTrivia(true)
 
     // Group teams by game
     const teamsByGame = teams.reduce((acc, team) => {
@@ -239,7 +277,9 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950">
+        <MissionBanner />
+        
         <Header 
           isAdmin={isAdmin} 
           setIsAdmin={setIsAdmin}
@@ -328,6 +368,19 @@ function App() {
             )}
           </Routes>
         </main>
+
+        <Footer />
+
+        {/* Islamic Feature Modals */}
+        <SalahReminder 
+          isOpen={showSalahReminder}
+          onClose={() => setShowSalahReminder(false)}
+        />
+        
+        <QuranTrivia 
+          isOpen={showQuranTrivia}
+          onClose={() => setShowQuranTrivia(false)}
+        />
       </div>
     </Router>
   )

@@ -4,13 +4,13 @@
 
 @layer base {
   body {
-    @apply bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 min-h-screen text-white font-sans;
+    @apply bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 min-h-screen text-white font-sans;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-glow transform hover:-translate-y-0.5 active:scale-95;
+    @apply bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-glow transform hover:-translate-y-0.5 active:scale-95;
   }
   
   .btn-secondary {
@@ -30,16 +30,16 @@
   }
 
   .card-premium::before {
-    @apply absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent pointer-events-none;
+    @apply absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent pointer-events-none;
     content: '';
   }
   
   .input-field {
-    @apply w-full px-4 py-3 bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 transition-all duration-300 shadow-inner;
+    @apply w-full px-4 py-3 bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all duration-300 shadow-inner;
   }
 
   .select-field {
-    @apply w-full px-4 py-3 bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 transition-all duration-300 shadow-inner appearance-none cursor-pointer;
+    @apply w-full px-4 py-3 bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all duration-300 shadow-inner appearance-none cursor-pointer;
   }
 
   .countdown-digit {
@@ -47,7 +47,7 @@
   }
 
   .game-badge {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-500/20 text-primary-300 border border-primary-500/30;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30;
   }
 
   .status-badge {
@@ -59,7 +59,7 @@
   }
 
   .nav-link-active {
-    @apply bg-gradient-to-r from-primary-600/20 to-primary-500/10 text-primary-300 border border-primary-500/30 shadow-inner-glow;
+    @apply bg-gradient-to-r from-emerald-600/20 to-emerald-500/10 text-emerald-300 border border-emerald-500/30 shadow-inner-glow;
   }
 
   .nav-link-inactive {

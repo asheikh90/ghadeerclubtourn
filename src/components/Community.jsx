@@ -5,14 +5,14 @@ const Community = ({ user, isAuthenticated }) => {
   const [activeTab, setActiveTab] = useState('members')
   const [searchTerm, setSearchTerm] = useState('')
 
-  // Mock community data
+  // Mock community data with Islamic ranks
   const members = [
-    { id: 1, username: 'AliGamer123', country: 'Iraq', games: ['COD', 'FIFA'], rank: 'Champion', joinDate: '2023-01-15', online: true },
-    { id: 2, username: 'HussainPro', country: 'Lebanon', games: ['Fortnite', 'Minecraft'], rank: 'Elite', joinDate: '2023-02-20', online: false },
-    { id: 3, username: 'FatimaGaming', country: 'Iran', games: ['Roblox', 'Fall Guys'], rank: 'Rising Star', joinDate: '2023-03-10', online: true },
-    { id: 4, username: 'ZahraBattles', country: 'Pakistan', games: ['Apex', 'Rocket League'], rank: 'Champion', joinDate: '2023-01-30', online: true },
-    { id: 5, username: 'MohammedFPS', country: 'India', games: ['COD', 'Apex'], rank: 'Elite', joinDate: '2023-02-15', online: false },
-    { id: 6, username: 'AyeshaMinecraft', country: 'USA', games: ['Minecraft', 'Roblox'], rank: 'Rising Star', joinDate: '2023-03-25', online: true }
+    { id: 1, username: 'AliGamer123', country: 'Iraq', games: ['COD', 'FIFA'], rank: '313 Elite', joinDate: '2023-01-15', online: true },
+    { id: 2, username: 'HussainPro', country: 'Lebanon', games: ['Fortnite', 'Minecraft'], rank: 'Ashab al-Kahf', joinDate: '2023-02-20', online: false },
+    { id: 3, username: 'FatimaGaming', country: 'Iran', games: ['Roblox', 'Fall Guys'], rank: 'Ansar', joinDate: '2023-03-10', online: true },
+    { id: 4, username: 'ZahraBattles', country: 'Pakistan', games: ['Apex', 'Rocket League'], rank: '313 Elite', joinDate: '2023-01-30', online: true },
+    { id: 5, username: 'MohammedFPS', country: 'India', games: ['COD', 'Apex'], rank: 'Ashab al-Kahf', joinDate: '2023-02-15', online: false },
+    { id: 6, username: 'AyeshaMinecraft', country: 'USA', games: ['Minecraft', 'Roblox'], rank: 'Hawariyun', joinDate: '2023-03-25', online: true }
   ]
 
   const discussions = [
@@ -32,10 +32,11 @@ const Community = ({ user, isAuthenticated }) => {
 
   const getRankColor = (rank) => {
     switch (rank) {
-      case 'Champion': return 'text-yellow-400'
-      case 'Elite': return 'text-purple-400'
-      case 'Rising Star': return 'text-blue-400'
-      default: return 'text-slate-400'
+      case '313 Elite': return 'text-yellow-400 bg-yellow-400/20 border-yellow-400/30'
+      case 'Ashab al-Kahf': return 'text-purple-400 bg-purple-400/20 border-purple-400/30'
+      case 'Ansar': return 'text-emerald-400 bg-emerald-400/20 border-emerald-400/30'
+      case 'Hawariyun': return 'text-blue-400 bg-blue-400/20 border-blue-400/30'
+      default: return 'text-slate-400 bg-slate-400/20 border-slate-400/30'
     }
   }
 
@@ -43,7 +44,7 @@ const Community = ({ user, isAuthenticated }) => {
     switch (rarity) {
       case 'legendary': return 'from-yellow-500/20 to-orange-500/20 border-yellow-500/30'
       case 'epic': return 'from-purple-500/20 to-pink-500/20 border-purple-500/30'
-      case 'rare': return 'from-blue-500/20 to-cyan-500/20 border-blue-500/30'
+      case 'rare': return 'from-emerald-500/20 to-emerald-600/20 border-emerald-500/30'
       default: return 'from-slate-500/20 to-slate-600/20 border-slate-500/30'
     }
   }
@@ -66,7 +67,7 @@ const Community = ({ user, isAuthenticated }) => {
       {/* Community Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         <div className="card text-center">
-          <Users className="h-8 w-8 text-primary-400 mx-auto mb-3" />
+          <Users className="h-8 w-8 text-emerald-400 mx-auto mb-3" />
           <div className="text-2xl font-bold text-white mb-1">2,547</div>
           <div className="text-slate-400 text-sm">Active Members</div>
         </div>
@@ -101,7 +102,7 @@ const Community = ({ user, isAuthenticated }) => {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 ${
                 activeTab === tab.id
-                  ? 'bg-primary-600/20 text-primary-300 border border-primary-500/30'
+                  ? 'bg-emerald-600/20 text-emerald-300 border border-emerald-500/30'
                   : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
               }`}
             >
@@ -140,7 +141,7 @@ const Community = ({ user, isAuthenticated }) => {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-3">
                     <div className="relative">
-                      <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center">
+                      <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold">
                           {member.username.charAt(0).toUpperCase()}
                         </span>
@@ -154,7 +155,7 @@ const Community = ({ user, isAuthenticated }) => {
                       <p className="text-slate-400 text-sm">{member.country}</p>
                     </div>
                   </div>
-                  <span className={`text-sm font-medium ${getRankColor(member.rank)}`}>
+                  <span className={`text-sm font-medium px-3 py-1 rounded-full border ${getRankColor(member.rank)}`}>
                     {member.rank}
                   </span>
                 </div>
@@ -175,7 +176,7 @@ const Community = ({ user, isAuthenticated }) => {
                     <span className="text-slate-400">
                       Joined {new Date(member.joinDate).toLocaleDateString()}
                     </span>
-                    <button className="text-primary-400 hover:text-primary-300 font-medium">
+                    <button className="text-emerald-400 hover:text-emerald-300 font-medium">
                       Connect
                     </button>
                   </div>
@@ -199,7 +200,7 @@ const Community = ({ user, isAuthenticated }) => {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
-                      <h3 className="font-bold text-white hover:text-primary-400 transition-colors">
+                      <h3 className="font-bold text-white hover:text-emerald-400 transition-colors">
                         {discussion.title}
                       </h3>
                       <span className="game-badge text-xs">{discussion.category}</span>
@@ -234,7 +235,7 @@ const Community = ({ user, isAuthenticated }) => {
                 <div key={achievement.id} className={`card-premium bg-gradient-to-br ${getRarityColor(achievement.rarity)}`}>
                   <div className="flex items-center space-x-4">
                     <div className="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-800 rounded-2xl flex items-center justify-center">
-                      <Icon className="h-8 w-8 text-primary-400" />
+                      <Icon className="h-8 w-8 text-emerald-400" />
                     </div>
                     <div className="flex-1">
                       <h3 className="font-bold text-white mb-1">{achievement.title}</h3>
