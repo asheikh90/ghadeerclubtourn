@@ -6,40 +6,37 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-        },
-        accent: {
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
-        },
-        discord: {
-          500: '#5865f2',
-          600: '#4752c4',
-          700: '#3c4ac2',
-        }
-      },
       fontFamily: {
         'gaming': ['Orbitron', 'monospace'],
         'sans': ['Inter', 'system-ui', 'sans-serif'],
       },
-      boxShadow: {
-        'glow': '0 0 20px rgba(14, 165, 233, 0.3)',
-        'card': '0 8px 32px rgba(0, 0, 0, 0.3)',
-        'inner-glow': 'inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+      colors: {
+        primary: {
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+        },
+        discord: {
+          500: '#5865f2',
+          600: '#4752c4',
+          700: '#3c45a5',
+        },
+        slate: {
+          800: '#1e293b',
+          900: '#0f172a',
+          950: '#020617',
+        }
       },
-      backdropBlur: {
-        'xs': '2px',
+      boxShadow: {
+        'glow': '0 0 20px rgba(59, 130, 246, 0.3)',
+        'glow-lg': '0 0 30px rgba(59, 130, 246, 0.4)',
+        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
+        'inner-glow': 'inset 0 1px 0 0 rgba(59, 130, 246, 0.1)',
+      },
+      animation: {
+        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       }
     },
   },

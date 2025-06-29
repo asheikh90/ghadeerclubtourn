@@ -1,24 +1,33 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Header from './components/Header'
-import TeamSignup from './components/TeamSignup'
-import TournamentBracket from './components/TournamentBracket'
-import ScoreSubmission from './components/ScoreSubmission'
-import Leaderboard from './components/Leaderboard'
-import AdminPanel from './components/AdminPanel'
+import Home from './components/Home'
+import Community from './components/Community'
+import Games from './components/Games'
+import Events from './components/Events'
+import IslamicContent from './components/IslamicContent'
+import Profile from './components/Profile'
+import TeamSignup from './components/tournament/TeamSignup'
+import TournamentBracket from './components/tournament/TournamentBracket'
+import ScoreSubmission from './components/tournament/ScoreSubmission'
+import Leaderboard from './components/tournament/Leaderboard'
+import AdminPanel from './components/tournament/AdminPanel'
 
 const GAMES = [
-  { id: 'cod', name: 'Call of Duty', platform: 'Activision ID' },
-  { id: 'fortnite', name: 'Fortnite', platform: 'Epic Games' },
-  { id: 'minecraft', name: 'Minecraft', platform: 'Minecraft Username' },
-  { id: 'roblox', name: 'Roblox', platform: 'Roblox Username' },
-  { id: 'fifa', name: 'FIFA', platform: 'EA ID' },
-  { id: 'madden', name: 'Madden', platform: 'EA ID' },
-  { id: 'nba2k', name: 'NBA 2K', platform: 'PSN/Xbox/Steam' },
-  { id: 'apex', name: 'Apex Legends', platform: 'Origin/Steam' }
+  { id: 'cod', name: 'Call of Duty', platform: 'Activision ID', category: 'FPS', rating: 'M', ageAppropriate: true },
+  { id: 'fortnite', name: 'Fortnite', platform: 'Epic Games', category: 'Battle Royale', rating: 'T', ageAppropriate: true },
+  { id: 'minecraft', name: 'Minecraft', platform: 'Minecraft Username', category: 'Sandbox', rating: 'E10+', ageAppropriate: true },
+  { id: 'roblox', name: 'Roblox', platform: 'Roblox Username', category: 'Platform', rating: 'E10+', ageAppropriate: true },
+  { id: 'fifa', name: 'FIFA', platform: 'EA ID', category: 'Sports', rating: 'E', ageAppropriate: true },
+  { id: 'madden', name: 'Madden', platform: 'EA ID', category: 'Sports', rating: 'E', ageAppropriate: true },
+  { id: 'nba2k', name: 'NBA 2K', platform: 'PSN/Xbox/Steam', category: 'Sports', rating: 'E', ageAppropriate: true },
+  { id: 'apex', name: 'Apex Legends', platform: 'Origin/Steam', category: 'Battle Royale', rating: 'T', ageAppropriate: true },
+  { id: 'rocket-league', name: 'Rocket League', platform: 'Epic Games', category: 'Sports', rating: 'E', ageAppropriate: true },
+  { id: 'fall-guys', name: 'Fall Guys', platform: 'Epic Games', category: 'Party', rating: 'E', ageAppropriate: true }
 ]
 
 function App() {
+  // Tournament state
   const [teams, setTeams] = useState([])
   const [matches, setMatches] = useState([])
   const [tournamentStarted, setTournamentStarted] = useState(false)
@@ -27,6 +36,10 @@ function App() {
   const [maxTeams] = useState(30)
   const [tournamentStartTime, setTournamentStartTime] = useState(null)
 
+  // Community state
+  const [user, setUser] = useState(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
   // Load data from localStorage on mount
   useEffect(() => {
     const savedTeams = localStorage.getItem('tournament-teams')
@@ -34,12 +47,17 @@ function App() {
     const savedTournamentStarted = localStorage.getItem('tournament-started')
     const savedCurrentRound = localStorage.getItem('current-round')
     const savedTournamentStartTime = localStorage.getItem('tournament-start-time')
+    const savedUser = localStorage.getItem('ghadeer-user')
 
     if (savedTeams) setTeams(JSON.parse(savedTeams))
     if (savedMatches) setMatches(JSON.parse(savedMatches))
     if (savedTournamentStarted) setTournamentStarted(JSON.parse(savedTournamentStarted))
     if (savedCurrentRound) setCurrentRound(JSON.parse(savedCurrentRound))
     if (savedTournamentStartTime) setTournamentStartTime(JSON.parse(savedTournamentStartTime))
+    if (savedUser) {
+      setUser(JSON.parse(savedUser))
+      setIsAuthenticated(true)
+    }
   }, [])
 
   // Save data to localStorage whenever state changes
@@ -62,6 +80,12 @@ function App() {
   useEffect(() => {
     localStorage.setItem('tournament-start-time', JSON.stringify(tournamentStartTime))
   }, [tournamentStartTime])
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('ghadeer-user', JSON.stringify(user))
+    }
+  }, [user])
 
   const addTeam = (team) => {
     if (teams.length < maxTeams && !tournamentStarted) {
@@ -191,11 +215,26 @@ function App() {
     setTournamentStarted(false)
     setCurrentRound(1)
     setTournamentStartTime(null)
-    localStorage.clear()
+    localStorage.removeItem('tournament-teams')
+    localStorage.removeItem('tournament-matches')
+    localStorage.removeItem('tournament-started')
+    localStorage.removeItem('current-round')
+    localStorage.removeItem('tournament-start-time')
   }
 
   const setTournamentTime = (dateTime) => {
     setTournamentStartTime(dateTime)
+  }
+
+  const login = (userData) => {
+    setUser(userData)
+    setIsAuthenticated(true)
+  }
+
+  const logout = () => {
+    setUser(null)
+    setIsAuthenticated(false)
+    localStorage.removeItem('ghadeer-user')
   }
 
   return (
@@ -208,12 +247,24 @@ function App() {
           teamsCount={teams.length}
           maxTeams={maxTeams}
           games={GAMES}
+          user={user}
+          isAuthenticated={isAuthenticated}
+          login={login}
+          logout={logout}
         />
         
         <main className="container mx-auto px-4 py-6 max-w-7xl">
           <Routes>
+            <Route path="/" element={<Home games={GAMES} user={user} />} />
+            <Route path="/community" element={<Community user={user} isAuthenticated={isAuthenticated} />} />
+            <Route path="/games" element={<Games games={GAMES} />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/islamic-content" element={<IslamicContent />} />
+            <Route path="/profile" element={<Profile user={user} isAuthenticated={isAuthenticated} />} />
+            
+            {/* Tournament Routes */}
             <Route 
-              path="/" 
+              path="/tournament" 
               element={
                 !tournamentStarted ? (
                   <TeamSignup 
@@ -225,12 +276,12 @@ function App() {
                     tournamentStartTime={tournamentStartTime}
                   />
                 ) : (
-                  <Navigate to="/bracket" replace />
+                  <Navigate to="/tournament/bracket" replace />
                 )
               } 
             />
             <Route 
-              path="/bracket" 
+              path="/tournament/bracket" 
               element={
                 <TournamentBracket 
                   matches={matches}
@@ -240,7 +291,7 @@ function App() {
               } 
             />
             <Route 
-              path="/submit-score" 
+              path="/tournament/submit-score" 
               element={
                 <ScoreSubmission 
                   matches={matches}
@@ -250,7 +301,7 @@ function App() {
               } 
             />
             <Route 
-              path="/leaderboard" 
+              path="/tournament/leaderboard" 
               element={
                 <Leaderboard 
                   matches={matches}
@@ -261,7 +312,7 @@ function App() {
             />
             {isAdmin && (
               <Route 
-                path="/admin" 
+                path="/tournament/admin" 
                 element={
                   <AdminPanel 
                     teams={teams}
